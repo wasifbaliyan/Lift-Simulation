@@ -35,8 +35,7 @@ const nearbyLift = (floorIndex, liftsAndFloorsArray) => {
  for ex: current floor is 3, total floor are 9 first we go for the bottom and above loop */
   for (let i = 0; i < liftsAndFloorsArray.length; i++) {
     for (let j = 0; j < liftsAndFloorsArray[i].length; j++) {
-      if (liftsAndFloorsArray[i][j] === 1) {
-        console.log("FOUND FLOOR", [i, j]);
+      if (floorIndex !== i && liftsAndFloorsArray[i][j] === 1) {
         return [i, j];
       }
     }
@@ -44,23 +43,14 @@ const nearbyLift = (floorIndex, liftsAndFloorsArray) => {
 };
 
 const moveLiftUpOrDown = (floorIndex) => {
-  liftsFloors = createLiftsAndFloors(Number(floors.value), Number(lifts.value));
   const foundNearbyLift = nearbyLift(floorIndex, liftsFloors);
-
+  if (!foundNearbyLift) return;
   liftsFloors[foundNearbyLift[0]][foundNearbyLift[1]] = 0;
   liftsFloors[floorIndex][foundNearbyLift[1]] = 1;
   root.innerHTML = null;
   createUI(liftsFloors);
 };
 
-// console.log(
-//   moveLiftUpOrDown(2, [
-//     [0, 1, 0],
-//     [0, 0, 0],
-//     [1, 0, 0],
-//     [0, 0, 1],
-//   ])
-// );
 createFloorAndLiftsButton.addEventListener("click", () => {
   liftsFloors = createLiftsAndFloors(Number(floors.value), Number(lifts.value));
   createUI(liftsFloors);
